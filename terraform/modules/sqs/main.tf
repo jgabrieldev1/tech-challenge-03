@@ -9,6 +9,6 @@ resource "aws_sqs_queue" "events" {
   visibility_timeout_seconds = 60
   message_retention_seconds  = 345600
   sqs_managed_sse_enabled    = true
-  redrive_policy = jsonencode({ deadLetterTargetArn = aws_sqs_queue.dlq.arn, maxReceiveCount = 5 })
+  redrive_policy             = jsonencode({ deadLetterTargetArn = aws_sqs_queue.dlq.arn, maxReceiveCount = 5 })
 }
 

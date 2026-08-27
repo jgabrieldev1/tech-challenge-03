@@ -28,23 +28,23 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_db_instance" "this" {
-  for_each               = var.database_names
-  identifier             = "${var.name}-${each.key}"
-  engine                 = "postgres"
-  engine_version         = "16"
-  instance_class         = var.instance_class
-  allocated_storage      = 20
-  max_allocated_storage  = 40
-  storage_type           = "gp3"
-  storage_encrypted      = true
-  db_name                = "${each.key}_db"
-  username               = "toggle"
-  password               = random_password.db[each.key].result
-  db_subnet_group_name   = aws_db_subnet_group.this.name
-  vpc_security_group_ids = [aws_security_group.this.id]
-  publicly_accessible    = false
-  multi_az               = false
-  skip_final_snapshot    = true
-  deletion_protection    = false
+  for_each                = var.database_names
+  identifier              = "${var.name}-${each.key}"
+  engine                  = "postgres"
+  engine_version          = "16"
+  instance_class          = var.instance_class
+  allocated_storage       = 20
+  max_allocated_storage   = 40
+  storage_type            = "gp3"
+  storage_encrypted       = true
+  db_name                 = "${each.key}_db"
+  username                = "toggle"
+  password                = random_password.db[each.key].result
+  db_subnet_group_name    = aws_db_subnet_group.this.name
+  vpc_security_group_ids  = [aws_security_group.this.id]
+  publicly_accessible     = false
+  multi_az                = false
+  skip_final_snapshot     = true
+  deletion_protection     = false
   backup_retention_period = 1
 }

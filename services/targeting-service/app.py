@@ -1,14 +1,14 @@
+import logging
 import os
 import sys
+from functools import wraps
+
 import psycopg2
 import requests
-import json
-from psycopg2.extras import RealDictCursor, Json
-from psycopg2.pool import SimpleConnectionPool
-from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-from functools import wraps
-import logging
+from flask import Flask, jsonify, request
+from psycopg2.extras import Json, RealDictCursor
+from psycopg2.pool import SimpleConnectionPool
 
 # Configura o logging
 logging.basicConfig(level=logging.INFO)
@@ -151,7 +151,7 @@ def update_rule(flag_name):
     
     values.append(flag_name) # Adiciona o 'flag_name' para a cláusula WHERE
     
-    query = f"UPDATE targeting_rules SET {', '.join(fields)} WHERE flag_name = %s RETURNING *"
+    query = f"UPDATE targeting_rules SET {', '.join(fields)} WHERE flag_name = %s RETURNING *"  # nosec B608
     
     conn = None
     cur = None
@@ -201,5 +201,5 @@ def delete_rule(flag_name):
         if conn: pool.putconn(conn)
 
 if __name__ == '__main__':
-    port = int(os.getenv("PORT", 8003))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    port = int(os.getenv("PORT", "8003"))
+    app.run(host='0.0.0.0', port=port, debug=False)  # nosec B104

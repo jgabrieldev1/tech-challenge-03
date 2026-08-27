@@ -1,5 +1,5 @@
 locals {
-  name = "${var.project_name}-${var.environment}"
+  name     = "${var.project_name}-${var.environment}"
   services = ["auth-service", "flag-service", "targeting-service", "evaluation-service", "analytics-service"]
 }
 
